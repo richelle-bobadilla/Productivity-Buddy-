@@ -1,6 +1,8 @@
 # imports
 import tkinter as tk
 from tkinter import messagebox
+import customtkinter as ctk
+
 
 class StudyTimer:
 
@@ -10,26 +12,28 @@ class StudyTimer:
         self.root = root
         self.root.title("Study Timer")
         self.time_left = 0
-
-        self.root.configure(bg = "#2e2e2e")
+        self.root.geometry("400x400")
+        self.root.configure(bg = "#1f1f1f")
 
 
         #widgets
         # instructions
-        self.instructions = tk.Label(root, text = "How long do you want to study?")
-        self.instructions.pack(pady = 20)
+        self.instructions = tk.Label(root, text = "Ready to focus?", font = ("Courier Prime 16", 13), fg = "#ececec", bg = "#1f1f1f")
+        self.instructions.pack(pady = 25)
+
+        # countdown text
+        self.countdown_text = tk.Label(root, text = "25:00", font =("Courier Prime 16", 50), fg = "#4a7eff", bg = "#1f1f1f")
+        self.countdown_text.pack()
+        
 
         # slider
-        self.slider = tk.Scale(root, orient = "horizontal", from_ = 1, to = 120, length = 300)
-        self.slider.pack(pady = 10)
+        self.slider = ctk.CTkSlider(master = root, from_ = 25, to = 120, width = 300, button_color = "#4a7eff", button_hover_color = "#2e5cb8", progress_color = "#4a7eff", fg_color = "#ececec")
+        self.slider.pack(pady = 50)
 
         # start button
         self.start_button = tk.Button(root, text = "Start", command = self.start_timer)
         self.start_button.pack(pady = 10)
 
-        # countdown text
-        self.countdown_text = tk.Label(root, text = "", font =("Helvetica", 50), fg = "#618af2", bg = "#2e2e2e")
-        self.countdown_text.pack()
 
 
     def start_timer(self):
