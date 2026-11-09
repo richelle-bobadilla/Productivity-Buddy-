@@ -3,6 +3,7 @@ from cProfile import label
 import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
+import pygame
 
 
 class StudyTimer:
@@ -66,6 +67,8 @@ class StudyTimer:
                         
         self.reset_button.pack(side = "left", padx = 10)
 
+        pygame.mixer.init()
+
 
 
     def slider_value(self, value):
@@ -111,7 +114,12 @@ class StudyTimer:
         elif self.is_timer_running:
             self.countdown_text.config(text = "00:00")
             messagebox.showinfo("Time's up! Break time :D")
+            pygame.mixer.music.load("bell.mp3")
+            pygame.mixer.music.set_volume(0.6)
+            pygame.mixer.music.play()
             self.is_timer_running = False
+            pygame.mixer.music.stop()
+
 
 
 
