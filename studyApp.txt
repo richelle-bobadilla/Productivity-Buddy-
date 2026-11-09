@@ -1,0 +1,18 @@
+====================================================================
+PROJECT_NAME = Study App
+LAST_UPDATED: 11/08/26
+
+A log of what I want to implement
+====================================================================
+
+PRODUCT BACKLOG
+
+====================================================================
+
+[TO-DO] A flashcard system
+
+[STARTED] A website blocker EXPECTED: 1 day: ACTUAL: STATUS: STARTED
+
+[OONE] A Pomodoro Timer EXPECTED: 1 day ACTUAL: 2.5 hours STATUS: DONE
+
+====================================================================

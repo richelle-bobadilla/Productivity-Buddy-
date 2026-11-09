@@ -1,5 +1,7 @@
 # Productivity-Buddy-
-An all in one app that helps my troubles in studying and productivity 
+An all-in-one system amde for me to be more productive and stay on task!
+
+This system features diffrent productivity tools such as the pomdoro timer, website blocker, flashcards, etc.
 
 
 ## References
