@@ -1,4 +1,5 @@
 # imports
+from cProfile import label
 import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
@@ -27,14 +28,20 @@ class StudyTimer:
         
 
         # slider
-        self.slider = ctk.CTkSlider(master = root, from_ = 25, to = 120, width = 300, button_color = "#4a7eff", button_hover_color = "#2e5cb8", progress_color = "#4a7eff", fg_color = "#ececec")
+        self.slider = ctk.CTkSlider(master = root, from_ = 25, to = 120, width = 250, button_color = "#4a7eff", button_hover_color = "#2e5cb8", progress_color = "#4a7eff",
+                                     fg_color = "#ececec", command = self.slider_value)
         self.slider.pack(pady = 50)
+        self.slider.set(25)
 
         # start button
         self.start_button = tk.Button(root, text = "Start", command = self.start_timer)
         self.start_button.pack(pady = 10)
 
 
+    def slider_value(self, value):
+        minutes = int(value)
+        self.countdown_text.config(text = f"{minutes:02d}:00")
+        
 
     def start_timer(self):
         # start the timer
@@ -54,7 +61,6 @@ class StudyTimer:
         else:
             self.countdown_text.config(text = "00:00")
             messagebox.showinfo("Time's up! Break time :D")
-
 
 
 
