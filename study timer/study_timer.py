@@ -4,20 +4,15 @@ import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
 import pygame
+from study_app import StudyApp
 
 
-class StudyTimer:
+class StudyTimer(StudyApp):
 
     def __init__(self, root):
-
-        # set up
-        self.root = root
-        self.root.title("Study Timer")
+        super().__init__(root)
         self.time_left = 0
-        self.root.geometry("400x400")
-        self.root.configure(bg = "#1f1f1f")
-        self.is_timer_running = False
-
+        self.root.title("Study Timer")
 
         #widgets
         # instructions
@@ -30,8 +25,6 @@ class StudyTimer:
         
 
         # slider
-        self.slider = ctk.CTkSlider(master = root, from_ = 0, to = 120, width = 250, button_color = "#4a7eff", button_hover_color = "#2e5cb8", progress_color = "#4a7eff",
-                                     fg_color = "#ececec", command = self.slider_value)
         self.slider.pack(pady = 50)
         self.slider.set(25)
 
@@ -50,7 +43,7 @@ class StudyTimer:
         self.pause_button.pack(side = "left", padx = 10)
         
         # start button
-        self.start_button = ctk.CTkButton(master = self.button_frame, text = "Start", command = self.start_timer, width = 70, height = 30, corner_radius = 10,
+        self.start_button = ctk.CTkButton(master = self.button_frame, text = "Start", command = super().start_timer, width = 70, height = 30, corner_radius = 10,
             fg_color="#4a7eff",
             hover_color="#2e5cb8",
             text_color="#ececec",
@@ -69,29 +62,11 @@ class StudyTimer:
 
         pygame.mixer.init()
 
-
-
-    def slider_value(self, value):
-        minutes = int(value)
-        self.countdown_text.config(text = f"{minutes:02d}:00")
-        
-
-    def start_timer(self):
-        # start the timer
-        if not self.is_timer_running:
-            self.is_timer_running = True
-            self.time_left = int(self.slider.get()) * 60
-            self.slider.configure(state = "disabled")
-
-            self.update_timer()
-
-        
     def pause_timer(self):
         self.is_timer_running = False
         messagebox.showinfo("Make sure to come back to studying after your break!")
         self.is_timer_running = True
         self.update_timer()
-
 
 
     def reset_timer(self):
@@ -107,30 +82,20 @@ class StudyTimer:
 
     def update_timer(self):
         # update the countdown text
-        if self.time_left > 0 and self.is_timer_running:
-            minutes, seconds = divmod(self.time_left, 60)
-            formatted_time = f"{minutes:02d}:{seconds:02d}"
-            self.countdown_text.config(text = formatted_time)
+        super().update_timer()
 
-            # moving slider bar
-            self.slider.set(self.time_left / 60)
-
-            self.time_left -= 1
-            self.root.after(1000, self.update_timer)
-
-        elif self.is_timer_running:
-            self.countdown_text.config(text = "00:00")
+        if self.countdown_text.cget("text") == "00:00" and self.is_timer_running:
             messagebox.showinfo("Time's up! Break time :D")
+            pygame.mixer.init()
             pygame.mixer.music.load("bell.mp3")
-
+            
             pygame.mixer.music.set_volume(0.6)
             pygame.mixer.music.play()
             self.is_timer_running = False
             pygame.mixer.music.stop()
-
+            
             self.slider.set(25)
             self.slider.configure(state = "normal")
-
 
 
 
