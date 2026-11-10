@@ -30,7 +30,7 @@ class StudyTimer:
         
 
         # slider
-        self.slider = ctk.CTkSlider(master = root, from_ = 25, to = 120, width = 250, button_color = "#4a7eff", button_hover_color = "#2e5cb8", progress_color = "#4a7eff",
+        self.slider = ctk.CTkSlider(master = root, from_ = 0, to = 120, width = 250, button_color = "#4a7eff", button_hover_color = "#2e5cb8", progress_color = "#4a7eff",
                                      fg_color = "#ececec", command = self.slider_value)
         self.slider.pack(pady = 50)
         self.slider.set(25)
@@ -81,6 +81,8 @@ class StudyTimer:
         if not self.is_timer_running:
             self.is_timer_running = True
             self.time_left = int(self.slider.get()) * 60
+            self.slider.configure(state = "disabled")
+
             self.update_timer()
 
         
@@ -99,7 +101,8 @@ class StudyTimer:
         #reset to 25 minutes
         self.time_left = 25 * 60 
 
-
+        self.slider.configure(state = "normal")
+        self.slider.set(25)
 
 
     def update_timer(self):
@@ -108,6 +111,10 @@ class StudyTimer:
             minutes, seconds = divmod(self.time_left, 60)
             formatted_time = f"{minutes:02d}:{seconds:02d}"
             self.countdown_text.config(text = formatted_time)
+
+            # moving slider bar
+            self.slider.set(self.time_left / 60)
+
             self.time_left -= 1
             self.root.after(1000, self.update_timer)
 
@@ -115,10 +122,14 @@ class StudyTimer:
             self.countdown_text.config(text = "00:00")
             messagebox.showinfo("Time's up! Break time :D")
             pygame.mixer.music.load("bell.mp3")
+
             pygame.mixer.music.set_volume(0.6)
             pygame.mixer.music.play()
             self.is_timer_running = False
             pygame.mixer.music.stop()
+
+            self.slider.set(25)
+            self.slider.configure(state = "normal")
 
 
 
